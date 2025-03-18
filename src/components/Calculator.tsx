@@ -1,4 +1,5 @@
 import { useState } from "react";
+import OperationButton from "./OperatonButton";
 
 const Calculator = () => {
     const [input1, setInput1] = useState<string>("");
@@ -86,29 +87,9 @@ return(
 
             {/*Botões operações*/}
             <div className=" grid grid--cols-3 gap-2">
-                <button
-                onClick={() => operation("+")}
-                className="p-2 bg-blue-500 text-white roundend"> + </button>
-
-                <button 
-                onClick={() =>operation ("-")}
-                className="p-2 bg-blue-500 text-white roundend"> - </button>
-
-                <button 
-                onClick={() => operation("*")} 
-                className="p-2 bg-blue-500 text-white roundend"> * </button>
-
-                <button
-                onClick={()=>operation("/")}
-                className="p-2 bg-blue-500 text-white roundend"> /</button>
-
-                <button 
-                onClick={()=>operation("^")}
-                className="p-2 bg-blue-500 text-white roundend"> ^ </button>
-
-                <button
-                onClick={()=>operation("√")}
-                className="p-2 bg-blue-500 text-white roundend"> √</button>
+                {["+", "-", "*", "/", "^", "√"].map((op)=>(
+                <OperationButton key={op} symbol={op} onClick={()=>operation(op)}/>
+                ))}
             </div>
 
             {/*Resultado*/}
