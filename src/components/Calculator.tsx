@@ -1,5 +1,6 @@
 import { useState } from "react";
 import OperationButton from "./OperatonButton";
+import NumberButton from "./NumberButtons";
 
 const Calculator = () => {
     const [input1, setInput1] = useState<string>("");
@@ -86,11 +87,20 @@ return(
             />
 
             {/*Botões operações*/}
-            <div className=" grid grid--cols-3 gap-2">
+            <div className=" grid grid-cols-3 gap-2">
                 {["+", "-", "*", "/", "^", "√"].map((op)=>(
                 <OperationButton key={op} symbol={op} onClick={()=>operation(op)}/>
                 ))}
             </div>
+            <div className="grid grid-cols-3 gap-2"/>
+            {/*Botões de números*/}
+            <div className="grid grid-cols-3 gap-2">
+                {["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"].map((numero)=>(
+                    <NumberButton key={numero} number= {numero} onClick={()=>setInput1(input1+numero)}/>
+                ))}
+
+            </div>
+
 
             {/*Resultado*/}
             <button 
