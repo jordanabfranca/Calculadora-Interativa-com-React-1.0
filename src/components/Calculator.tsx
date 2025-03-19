@@ -14,8 +14,11 @@ const expressionButton = (value: string) =>{
     const calculaResult = () =>{
 
         try {
-            const evalResult = eval(expression);
-            const calculatedResult = new Function(`return (${expression})`)();
+            let formattedExpression = expression.replace(/\^/g, "**"); //calcular exponeciação
+            formattedExpression = expression.replace(/√(\d+(\.\d+)?)/g,"Math.sqrt($1)");
+            formattedExpression = expression.replace(/\,/g, ".")
+            const calculatedResult = new Function(`return (${formattedExpression})`)();
+
             setExpression(calculatedResult.toString());
         } catch (error) {
            
@@ -24,42 +27,69 @@ const expressionButton = (value: string) =>{
 
     };
 
+    const handleClearVisor = () =>{
+        setExpression("");
+    }
+
+    const handleDelete =() =>{
+        setExpression((prev) =>prev.slice(0,-1));
+    }
+
     //Interface da calculadora
 
 return(
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 ">
-        <h1 className="text -2xl font-bold mmb-4"> Calculadora</h1>
+    <div className="flex flex-col items-center justify-center min-h-screen bg-[#394763] ">
+        <h1 className="text-3xl font-bold mmb-4 text-[#e3ded8]"> Calculadora</h1>
 
         
 
 
-        <div className="bg-white p-6 rounded-lg shadow-lg">
+        
             {/*Visor Calculadora*/}
-            <input
-            type="text"
-            value={expression}
-            onChange={(e) => setExpression(e.target.value)}
-            className="w-full p-3 text-2xl border border-gray-300 rounded mb-4 text-right font-mono shadow-md"
+            <div className="mt-2 w-full max-w-md p-4 bg-[#182033] rounded-lg shadow-lg">
+                <input
+                type="text"
+                value={expression}
+                onChange={(e) => setExpression(e.target.value)}
+                className="w-full p-3 text-2xl bg-transparent border-none outline-none text-[#e3ded8] text-right font-mono"
             />
-            {/*Botões operações*/}
+            </div>
+            
+            <div className="w-full max-w-md p-4 bg-[#242c43] rounded-lg shadow-lg mt-4">
             <div className=" grid grid-cols-3 gap-2">
-                {["+", "-", "*", "/", "^", "√"].map((op)=>(
-                    <OperationButton key={op} symbol={op} onClick={()=>expressionButton(op)}/>
-                    ))} </div>
 
-                <div className="grid grid-cols-3 gap-2"/>
-                <div className=" grid grid-cols-3 gap-2">  </div>
-            {/*Botões de números*/}
-            <div className="grid grid-cols-3 gap-2">
+                {/*Botões operações*/}
+                {["+", "-", "*", "/", "^", "√", ","].map((op)=>(
+                    <OperationButton key={op} symbol={op} onClick={()=>expressionButton(op)}/>
+                    ))} 
+                
+                {/*Botões de números*/}
                 {["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"].map((numero)=>(
                     <NumberButton key={numero} number= {numero} onClick={()=>expressionButton(numero)}/>
-                    ))} </div>
+                    ))}
+            </div>
 
-            {/*Resultado*/}
+            <div className="mt-2"></div>
+            <div className="flex gap-2">
+
             <button 
-                onClick={calculaResult} className="w-full mt-4 p-2 bg-green-500 text-white roundend">
-                = 
+                onClick={handleDelete} className=" w-1/2 p-2 bg-[#6b738e] text-[#e3ded8] rounded"> 
+                    DEL 
                 </button>
+
+                <button 
+                onClick={handleClearVisor} className=" w-1/2 p-2 bg-[#6b738e] text-[#e3ded8] rounded"> 
+                    RESET 
+                </button>
+
+                <button 
+                onClick={calculaResult} className=" w-1/2 p-2 bg-[#c84033] text-[#e3ded8]  rounded">
+                    = 
+                </button>
+
+                
+            </div>
+            
 
                 
                 </div>

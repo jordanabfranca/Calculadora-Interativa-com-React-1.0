@@ -6,7 +6,7 @@ interface OperationButtonProps{
 }
 const OperationButton: React.FC<OperationButtonProps> = ({symbol, onClick}) =>{
     return(
-        <button onClick={onClick} className="p-2 bg-blue-500 text-white rounded">
+        <button onClick={onClick} className="p-2 bg-[#e3ded8] text-[#394763] rounded">
          {symbol}
          </button>
     );
