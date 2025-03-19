@@ -3,58 +3,24 @@ import OperationButton from "./OperatonButton";
 import NumberButton from "./NumberButtons";
 
 const Calculator = () => {
-    const [input1, setInput1] = useState<string>("");
-    const [input2, setInput2] = useState<string>("");
     const [result, setResult] = useState<number | string> ("");
     const [expression, setExpression] = useState<string>("");
 
-    //realizar operações
-    const operation = (op: string) =>{
-        if(!input1 || !input2){
-            setResult("Erro: Preencha os dois mumeros!");
-            return;
-        }
-        setExpression(`${input1} ${op} ${input2}`);
-    };
+    //attualiza a exppressao a medida que clica em um botao
+const expressionButton = (value: string) =>{
+    setExpression((prev) => prev + value );
+}
+
 
     const calculaResult = () =>{
-        if(!expression) return;
 
-        const [n1, op, n2] = expression.split(" ");
-        const num1 = parseFloat(input1);
-        const num2 = parseFloat(input2);
-
-        if (isNaN(num1) || isNaN(num2)){
-            setResult("Erro: Números Inválidos")
-            return;
+        try {
+            const evalResult = eval(expression);
+            setResult (evalResult);
+        } catch (error) {
+            setResult("erro")
         }
 
-        switch (op){
-            case "+":
-                setResult (num1 + num2);
-                break;
-            case "-":
-                setResult (num1 - num2);
-                break;
-            case "*":
-                setResult (num1 * num2);
-                break
-                case "/":
-                    setResult(num2 !== 0 ? num1 / num2 : "Erro: Divisão por zero");
-                    break;
-            case "^":
-                setResult(Math.pow(num1,num2));
-                break;
-            case "√":
-                if (num1< 0){
-                    setResult("Erro: Raiz de numero negativo")
-                } else{
-                    setResult(Math.sqrt(num1))
-                }
-                break;
-            default:
-                    setResult("Erro: Operação Inválida")
-        }
     };
 
     //Interface da calculadora
@@ -63,59 +29,45 @@ return(
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 ">
         <h1 className="text -2xl font-bold mmb-4"> Calculadora</h1>
 
-        {/*Visor Calculadora*/}
-        <div className="bg-white p-4 roundend-lg shadow-md w-64 text-rigt text-2xl font-mono mb-4 border border-gray-300 "> 
-            {expression || "  "}
-        </div>
+        
 
-        <div className="bg-white p-6 roundend-lg shadow-lg">
-            {/*Inputs */}
+
+        <div className="bg-white p-6 rounded-lg shadow-lg">
+            {/*Visor Calculadora*/}
             <input
-            type="number"
-            value={input1}
-            onChange={(e) => setInput1(e.target.value)}
-            className="w-full p-2 border border-gray-300 roundend mb-2"
-            placeholder="Número 1"
+            type="text"
+            value={expression}
+            onChange={(e) => setExpression(e.target.value)}
+            className="w-full p-3 text-2xl border border-gray-300 rounded mb-4 text-right font-mono shadow-md"
             />
-
-            <input
-            type = "number"
-            value ={input2}
-            onChange={(e) => setInput2(e.target.value)}
-            className="w-full p-2 border border-gray-300 roundend mb-2"
-            placeholder="Número 2"
-            />
-
             {/*Botões operações*/}
             <div className=" grid grid-cols-3 gap-2">
                 {["+", "-", "*", "/", "^", "√"].map((op)=>(
-                <OperationButton key={op} symbol={op} onClick={()=>operation(op)}/>
-                ))}
-            </div>
-            <div className="grid grid-cols-3 gap-2"/>
+                    <OperationButton key={op} symbol={op} onClick={()=>expressionButton(op)}/>
+                    ))} </div>
+
+                <div className="grid grid-cols-3 gap-2"/>
+                <div className=" grid grid-cols-3 gap-2"></div>
             {/*Botões de números*/}
             <div className="grid grid-cols-3 gap-2">
                 {["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"].map((numero)=>(
-                    <NumberButton key={numero} number= {numero} onClick={()=>setInput1(input1+numero)}/>
-                ))}
-
-            </div>
-
+                    <NumberButton key={numero} number= {numero} onClick={()=>expressionButton(numero)}/>
+                    ))} </div>
 
             {/*Resultado*/}
             <button 
-            onClick={calculaResult} className="w-full mt-4 p-2 bg-green-500 text-white roundend">
-            = 
-            </button>
+                onClick={calculaResult} className="w-full mt-4 p-2 bg-green-500 text-white roundend">
+                = 
+                </button>
 
-
-            <div className="mt-4">
-                <p className="text-xl font-semibold"> {result !== "" ? `Resultado: ${result}`: ""}</p>
-
+                <div className="mt-4">
+                    <p className="text-xl font-semibold">
+                        {result !== "" ? `Resultado: ${result}`: ""} </p>
+                </div>
+                </div>
             </div>
-
-        </div>
-    </div>
+            
+    
 
 );
 
