@@ -3,7 +3,6 @@ import OperationButton from "./OperatonButton";
 import NumberButton from "./NumberButtons";
 
 const Calculator = () => {
-    const [result, setResult] = useState<number | string> ("");
     const [expression, setExpression] = useState<string>("");
 
     //attualiza a exppressao a medida que clica em um botao
@@ -16,10 +15,10 @@ const expressionButton = (value: string) =>{
 
         try {
             const evalResult = eval(expression);
-            setResult (evalResult);
-            setExpression(evalResult.toString());
+            const calculatedResult = new Function(`return (${expression})`)();
+            setExpression(calculatedResult.toString());
         } catch (error) {
-            setResult("erro");
+           
             setExpression("erro");
         }
 
