@@ -17,8 +17,10 @@ const expressionButton = (value: string) =>{
         try {
             const evalResult = eval(expression);
             setResult (evalResult);
+            setExpression(evalResult.toString());
         } catch (error) {
-            setResult("erro")
+            setResult("erro");
+            setExpression("erro");
         }
 
     };
@@ -47,7 +49,7 @@ return(
                     ))} </div>
 
                 <div className="grid grid-cols-3 gap-2"/>
-                <div className=" grid grid-cols-3 gap-2"></div>
+                <div className=" grid grid-cols-3 gap-2">  </div>
             {/*Botões de números*/}
             <div className="grid grid-cols-3 gap-2">
                 {["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"].map((numero)=>(
@@ -60,10 +62,7 @@ return(
                 = 
                 </button>
 
-                <div className="mt-4">
-                    <p className="text-xl font-semibold">
-                        {result !== "" ? `Resultado: ${result}`: ""} </p>
-                </div>
+                
                 </div>
             </div>
             
