@@ -42,11 +42,8 @@ return(
         <h1 className="text-3xl font-bold mmb-4 text-[#e3ded8]"> Calculadora</h1>
 
         
-
-
-        
             {/*Visor Calculadora*/}
-            <div className="mt-2 w-full max-w-md p-4 bg-[#182033] rounded-lg shadow-lg">
+            <div className="mt-2 w-[300px] max-w-md p-4 bg-[#182033] rounded-lg shadow-lg">
                 <input
                 type="text"
                 value={expression}
@@ -55,38 +52,43 @@ return(
             />
             </div>
             
-            <div className="w-full max-w-md p-4 bg-[#242c43] rounded-lg shadow-lg mt-4">
-            <div className=" grid grid-cols-3 gap-2">
+            <div className="w-[300px]  p-4 bg-[#242c43]  rounded-lg shadow-lg mt-4">
+            <div className=" grid grid-cols-4 gap-2">
 
-                {/*Botões operações*/}
-                {["+", "-", "*", "/", "^", "√", ","].map((op)=>(
-                    <OperationButton key={op} symbol={op} onClick={()=>expressionButton(op)}/>
-                    ))} 
-                
-                {/*Botões de números*/}
-                {["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"].map((numero)=>(
-                    <NumberButton key={numero} number= {numero} onClick={()=>expressionButton(numero)}/>
-                    ))}
-            </div>
-
-            <div className="mt-2"></div>
-            <div className="flex gap-2">
-
-            <button 
-                onClick={handleDelete} className=" w-1/2 p-2 bg-[#6b738e] text-[#e3ded8] rounded"> 
-                    DEL 
+                {/* Linha 1 */}
+                <NumberButton number="7" onClick={() => expressionButton("7")} />
+                <NumberButton number="8" onClick={() => expressionButton("8")} />
+                <NumberButton number="9" onClick={() => expressionButton("9")} />
+                <button onClick={handleDelete} 
+                className="p-2 bg-[#6b738e] w-[45px] h-[30px] flex items-center justify-center font-bold rounded text-white">
+                    DEL
                 </button>
 
-                <button 
-                onClick={handleClearVisor} className=" w-1/2 p-2 bg-[#6b738e] text-[#e3ded8] rounded"> 
-                    RESET 
-                </button>
+                {/* Linha 2 */}
+                <NumberButton number="4" onClick={() => expressionButton("4")} />
+                <NumberButton number="5" onClick={() => expressionButton("5")} />
+                <NumberButton number="6" onClick={() => expressionButton("6")} />
+                <OperationButton symbol="+" onClick={() => expressionButton("+")} />
 
-                <button 
-                onClick={calculaResult} className=" w-1/2 p-2 bg-[#c84033] text-[#e3ded8]  rounded">
-                    = 
-                </button>
+                {/* Linha 3 */}
+                <NumberButton number="1" onClick={() => expressionButton("1")} />
+                <NumberButton number="2" onClick={() => expressionButton("2")} />
+                <NumberButton number="3" onClick={() => expressionButton("3")} />
+                <OperationButton symbol="-" onClick={() => expressionButton("-")} />
 
+                {/* Linha 4 */}
+                <NumberButton number="." onClick={() => expressionButton(".")} />
+                <NumberButton number="0" onClick={() => expressionButton("0")} />
+                <OperationButton symbol="/" onClick={() => expressionButton("/")} />
+                <OperationButton symbol="*" onClick={() => expressionButton("*")} />
+
+                {/* Linha 5 (RESET e =) */}
+                <button onClick={handleClearVisor} className="h-[30px] flex items-center justify-center col-span-2 p-2 font-bold bg-[#6b738e] rounded text-white">
+                    RESET
+                </button>
+                <button onClick={calculaResult} className="h-[30px] flex items-center justify-center col-span-2 p-2 font-bold bg-[#c84033] rounded text-white">
+                    =
+                </button>
                 
             </div>
             
