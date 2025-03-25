@@ -13,7 +13,7 @@ const NavLinks = () => {
         {" "}
         About{" "}
       </NavLink>
-      <NavLink to="/contat" className={activeStyleCallback}>
+      <NavLink to="/contact" className={activeStyleCallback}>
         {" "}
         Contat
       </NavLink>
